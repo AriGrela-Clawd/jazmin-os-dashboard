@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="metrics-detailed">
+    <div class="metric-detail-card">
+        <div class="metric-header"><h3>💻 CPU</h3><span class="metric-live-badge">LIVE</span></div>
+        <div class="metric-gauge">
+            <svg viewBox="0 0 120 120" class="gauge-svg">
+                <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                <circle class="gauge-fill cpu-gauge" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="cpuGauge"/>
+            </svg>
+            <div class="gauge-value" id="cpuGaugeValue">0%</div>
+        </div>
+        <div class="metric-details">
+            <div class="detail-line"><span>Núcleos:</span><span id="cpuCores">-</span></div>
+            <div class="detail-line"><span>Frecuencia:</span><span id="cpuFreq">-</span></div>
+        </div>
+    </div>
+    <div class="metric-detail-card">
+        <div class="metric-header"><h3>🧠 Memoria</h3><span class="metric-live-badge">LIVE</span></div>
+        <div class="metric-gauge">
+            <svg viewBox="0 0 120 120" class="gauge-svg">
+                <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                <circle class="gauge-fill memory-gauge" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="memoryGauge"/>
+            </svg>
+            <div class="gauge-value" id="memoryGaugeValue">0%</div>
+        </div>
+        <div class="metric-details">
+            <div class="detail-line"><span>Usado:</span><span id="memoryUsed">-</span></div>
+            <div class="detail-line"><span>Total:</span><span id="memoryTotal">-</span></div>
+        </div>
+    </div>
+    <div class="metric-detail-card">
+        <div class="metric-header"><h3>💾 Disco</h3><span class="metric-static-badge">STATIC</span></div>
+        <div class="metric-gauge">
+            <svg viewBox="0 0 120 120" class="gauge-svg">
+                <circle class="gauge-bg" cx="60" cy="60" r="50"/>
+                <circle class="gauge-fill disk-gauge" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314" id="diskGauge"/>
+            </svg>
+            <div class="gauge-value" id="diskGaugeValue">0%</div>
+        </div>
+        <div class="metric-details">
+            <div class="detail-line"><span>Usado:</span><span id="diskUsed">-</span></div>
+            <div class="detail-line"><span>Libre:</span><span id="diskFree">-</span></div>
+        </div>
+    </div>
+</div>
+<div class="system-info-section">
+    <h2>ℹ️ Información del Sistema</h2>
+    <div class="info-grid">
+        <div class="info-card"><div class="info-icon">🖥️</div><div class="info-content"><div class="info-label">Hostname</div><div class="info-value">Dell-OptiPlex-3090</div></div></div>
+        <div class="info-card"><div class="info-icon">⏱️</div><div class="info-content"><div class="info-label">Uptime</div><div class="info-value" id="uptimeDetail">-</div></div></div>
+        <div class="info-card"><div class="info-icon">🐧</div><div class="info-content"><div class="info-label">Plataforma</div><div class="info-value">Linux</div></div></div>
+    </div>
+</div>
+<div class="metrics-chart-section">
+    <h2>📈 Historial de Métricas</h2>
+    <div class="chart-placeholder">
+        <div class="chart-bars">
+            {% for i in range(20) %}<div class="chart-bar" style="height: {{ range(20, 90) | random }}%"></div>{% endfor %}
+        </div>
+        <div class="chart-labels"><span>Histórico de uso de CPU</span></div>
+    </div>
+</div>
+{% endblock %}

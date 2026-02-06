@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="memory-header">
+    <div class="memory-filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="recent">Recientes</button>
+        <button class="filter-btn" data-filter="month">Este mes</button>
+    </div>
+    <div class="memory-count">{{ entries | length }} entradas</div>
+</div>
+<div class="memory-timeline">
+    {% for entry in entries %}
+    <div class="memory-entry" data-date="{{ entry.date }}">
+        <div class="memory-marker"><div class="memory-dot"></div></div>
+        <div class="memory-card">
+            <div class="memory-card-header">
+                <div class="memory-date"><span class="date-day">{{ entry.date[8:10] }}</span><span class="date-month">{{ entry.formatted_date[3:6] }}</span><span class="date-year">{{ entry.date[:4] }}</span></div>
+                <div class="memory-meta"><span class="memory-size">{{ entry.size_kb }} KB</span><button class="btn-icon" onclick="toggleMemory('{{ loop.index }}')">🔽</button></div>
+            </div>
+            <div class="memory-content" id="memory-{{ loop.index }}" style="display: none;"><div class="memory-text markdown-content">{{ entry.content | replace('\n', '<br>') | safe }}</div></div>
+            <div class="memory-preview" id="preview-{{ loop.index }}">{{ entry.content[:200] | replace('\n', ' ') }}...</div>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state-lg"><div class="empty-icon">📝</div><h3>No hay entradas de memoria</h3></div>
+    {% endfor %}
+</div>
+{% endblock %}

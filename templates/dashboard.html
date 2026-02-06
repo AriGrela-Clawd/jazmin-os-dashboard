@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | {{ app_name }}{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Agentes Totales</span>
+            <div class="stat-icon agents">🤖</div>
+        </div>
+        <div class="stat-value" id="stat-agents">0</div>
+        <div class="stat-subtitle"><span id="stat-online">0</span> en línea</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Proyectos</span>
+            <div class="stat-icon projects">📁</div>
+        </div>
+        <div class="stat-value" id="stat-projects">0</div>
+        <div class="stat-subtitle"><span id="stat-active-projects">0</span> activos</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">Tareas</span>
+            <div class="stat-icon tasks">✓</div>
+        </div>
+        <div class="stat-value" id="stat-tasks">0</div>
+        <div class="stat-subtitle"><span id="stat-pending">0</span> pendientes</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-header">
+            <span class="stat-label">CPU</span>
+            <div class="stat-icon system">⚡</div>
+        </div>
+        <div class="stat-value" id="metric-cpu">--%</div>
+        <div class="stat-subtitle">Dell OptiPlex 3090</div>
+    </div>
+</div>
+
+<!-- System Metrics -->
+<div class="section-card">
+    <div class="section-header">
+        <span class="section-title">Métricas del Sistema</span>
+        <span class="badge badge-active">En tiempo real</span>
+    </div>
+    <div class="section-content">
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <span class="metric-label">CPU</span>
+                <span class="metric-value" id="metric-cpu-detail">--%</span>
+                <div class="metric-bar">
+                    <div class="metric-bar-fill cpu" id="bar-cpu" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-item">
+                <span class="metric-label">Memoria</span>
+                <span class="metric-value" id="metric-memory">--%</span>
+                <div class="metric-bar">
+                    <div class="metric-bar-fill memory" id="bar-memory" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="metric-item">
+                <span class="metric-label">Disco</span>
+                <span class="metric-value" id="metric-disk">--%</span>
+                <div class="metric-bar">
+                    <div class="metric-bar-fill disk" id="bar-disk" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+    <!-- Recent Logs -->
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">Logs Recientes</span>
+            <a href="/logs" class="btn">Ver todos</a>
+        </div>
+        <div class="section-content">
+            <div class="logs-container" id="recent-logs">
+                <div style="text-align: center; color: var(--text-muted); padding: 32px;">
+                    Cargando logs...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Agents Preview -->
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">Estado de Agentes</span>
+            <a href="/agents" class="btn">Gestionar</a>
+        </div>
+        <div class="section-content">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Agente</th>
+                        <th>Tipo</th>
+                        <th>Última vez</th>
+                    </tr>
+                </thead>
+                <tbody id="agents-preview">
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 32px;">
+                            Cargando agentes...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

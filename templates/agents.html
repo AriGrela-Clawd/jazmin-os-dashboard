@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Agentes | {{ app_name }}{% endblock %}
+{% block page_title %}Gestión de Agentes{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <div class="section-header">
+        <span class="section-title">Agentes del Sistema</span>
+        <button class="btn btn-primary" onclick="refreshCurrentPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Actualizar
+        </button>
+    </div>
+    <div class="section-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Agente</th>
+                    <th>Tipo</th>
+                    <th>Última ejecución</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="agents-table">
+                <tr>
+                    <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 48px;">
+                        Cargando agentes...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Agent Info Cards -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">🌅 Agente Matutino</span>
+            <span class="badge badge-active">11:00 AM</span>
+        </div>
+        <div class="section-content">
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Reporte diario completo con clima, Twitter, ofertas laborales e ideas creativas.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge badge-online">clima</span>
+                <span class="badge badge-online">twitter</span>
+                <span class="badge badge-online">laburos</span>
+                <span class="badge badge-online">ideas</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">🛠️ Agente Creador</span>
+            <span class="badge badge-active">3:00 AM</span>
+        </div>
+        <div class="section-content">
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Crea herramientas y automatizaciones para mejorar la infraestructura del sistema.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge badge-online">herramientas</span>
+                <span class="badge badge-online">scripts</span>
+                <span class="badge badge-online">automation</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">👤 Agente Personal</span>
+            <span class="badge badge-active">4:00 AM</span>
+        </div>
+        <div class="section-content">
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Proyectos personales de Ari: LinkedIn, portfolio, marca personal e ideas de negocio.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge badge-online">linkedin</span>
+                <span class="badge badge-online">portfolio</span>
+                <span class="badge badge-online">negocios</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section-card">
+        <div class="section-header">
+            <span class="section-title">🏗️ Agente Arquitecto</span>
+            <span class="badge badge-active">5:00 AM</span>
+        </div>
+        <div class="section-content">
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Desarrolla aplicaciones Python grandes y funcionales en un ciclo rotativo de 3 días.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <span class="badge badge-online">fastapi</span>
+                <span class="badge badge-online">apps</span>
+                <span class="badge badge-online">proyectos</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

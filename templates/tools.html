@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="tools-header">
+    <h2>🛠️ Skills Instaladas</h2>
+    <p class="tools-subtitle">Herramientas disponibles en el ecosistema Clawdbot</p>
+</div>
+<div class="tools-grid">
+    {% for tool in tools %}
+    <div class="tool-card">
+        <div class="tool-icon">{% if tool.has_python %}🐍{% elif tool.has_shell %}🐚{% else %}📦{% endif %}</div>
+        <div class="tool-content">
+            <h3 class="tool-name">{{ tool.name }}</h3>
+            <p class="tool-description">{% if tool.description %}{{ tool.description }}{% else %}Sin descripción{% endif %}</p>
+            <div class="tool-tags">
+                {% if tool.has_python %}<span class="tool-tag python">Python</span>{% endif %}
+                {% if tool.has_shell %}<span class="tool-tag shell">Shell</span>{% endif %}
+            </div>
+        </div>
+        <div class="tool-actions"><button class="btn btn-sm" onclick="openTool('{{ tool.path }}')">Abrir</button></div>
+    </div>
+    {% else %}
+    <div class="empty-state-lg"><div class="empty-icon">🛠️</div><h3>No hay skills instaladas</h3></div>
+    {% endfor %}
+</div>
+<div class="system-commands-section">
+    <h2>⌨️ Comandos del Sistema</h2>
+    <div class="commands-list">
+        <div class="command-item"><code class="command-code">clawdbot status</code><span class="command-desc">Ver estado del sistema</span></div>
+        <div class="command-item"><code class="command-code">clawdbot cron list</code><span class="command-desc">Listar tareas programadas</span></div>
+        <div class="command-item"><code class="command-code">clawdbot cron run &lt;job&gt;</code><span class="command-desc">Ejecutar job manualmente</span></div>
+        <div class="command-item"><code class="command-code">memory_search &lt;query&gt;</code><span class="command-desc">Buscar en memoria</span></div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Logs | {{ app_name }}{% endblock %}
+{% block page_title %}Logs del Sistema{% endblock %}
+
+{% block content %}
+<div class="section-card">
+    <div class="section-header">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <span class="section-title">Registro de Eventos</span>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn btn-sm" onclick="filterLogs('all')" id="filter-all">Todos</button>
+                <button class="btn btn-sm" onclick="filterLogs('info')" id="filter-info">Info</button>
+                <button class="btn btn-sm" onclick="filterLogs('warning')" id="filter-warning">Warnings</button>
+                <button class="btn btn-sm" onclick="filterLogs('error')" id="filter-error">Errores</button>
+            </div>
+        </div>
+        <button class="btn" onclick="refreshCurrentPage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Actualizar
+        </button>
+    </div>
+    <div class="section-content" style="padding: 0;">
+        <div class="logs-container" id="logs-container" style="max-height: 600px; padding: 20px;">
+            <div style="text-align: center; color: var(--text-muted); padding: 48px;">
+                Cargando logs...
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats -->
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px;">
+    <div class="stat-card" style="text-align: center;">
+        <div class="stat-value" style="font-size: 1.5rem; color: #60a5fa;">INFO</div>
+        <div class="stat-label">Eventos informativos</div>
+    </div>
+    <div class="stat-card" style="text-align: center;">
+        <div class="stat-value" style="font-size: 1.5rem; color: #fbbf24;">WARN</div>
+        <div class="stat-label">Advertencias</div>
+    </div>
+    <div class="stat-card" style="text-align: center;">
+        <div class="stat-value" style="font-size: 1.5rem; color: #f87171;">ERROR</div>
+        <div class="stat-label">Errores</div>
+    </div>
+    <div class="stat-card" style="text-align: center;">
+        <div class="stat-value" style="font-size: 1.5rem; color: #a78bfa;">DEBUG</div>
+        <div class="stat-label">Depuración</div>
+    </div>
+</div>
+
+<script>
+let currentFilter = 'all';
+let allLogs = [];
+
+function filterLogs(level) {
+    currentFilter = level;
+    
+    // Update button styles
+    document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+        btn.classList.remove('btn-primary');
+    });
+    document.getElementById(`filter-${level}`).classList.add('btn-primary');
+    
+    // Filter and render
+    renderFilteredLogs();
+}
+
+function renderFilteredLogs() {
+    const container = document.getElementById('logs-container');
+    if (!container) return;
+    
+    const filtered = currentFilter === 'all' 
+        ? allLogs 
+        : allLogs.filter(log => log.level === currentFilter);
+    
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; color: var(--text-muted); padding: 48px;">
+                No hay logs para mostrar
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = filtered.map(log => `
+        <div class="log-entry" data-level="${log.level}">
+            <span class="log-time">${formatDateTime(log.timestamp)}</span>
+            <span class="log-level log-level-${log.level}">${log.level.toUpperCase()}</span>
+            <span class="log-source">${log.source}</span>
+            <span class="log-message">${escapeHtml(log.message)}</span>
+        </div>
+    `).join('');
+}
+
+// Override loadLogsData to store logs
+const originalLoadLogsData = loadLogsData;
+loadLogsData = async function() {
+    try {
+        const res = await fetch('/api/logs?limit=100');
+        const data = await res.json();
+        allLogs = data.items || [];
+        renderFilteredLogs();
+    } catch (error) {
+        console.error('Error cargando logs:', error);
+    }
+};
+
+// Initialize filter
+filterLogs('all');
+</script>
+{% endblock %}
