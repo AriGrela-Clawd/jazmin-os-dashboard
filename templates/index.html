@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazmín OS 🌸</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🌸</span>
+                <h1>Jazmín OS</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="pulse"></span>
+                <span>Sistema Activo</span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- System Stats -->
+            <section class="card system-stats">
+                <h2>📊 Métricas del Sistema</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon cpu">🖥️</div>
+                        <div class="stat-info">
+                            <span class="stat-label">CPU</span>
+                            <span class="stat-value" id="cpu-percent">--%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="cpu-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon memory">💾</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Memoria</span>
+                            <span class="stat-value" id="memory-percent">--%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="memory-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon disk">💿</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Disco</span>
+                            <span class="stat-value" id="disk-percent">--%</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="disk-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon uptime">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Uptime</span>
+                            <span class="stat-value" id="uptime">--</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agents Status -->
+            <section class="card agents-section">
+                <h2>🤖 Estado de Agentes</h2>
+                <div class="agents-grid" id="agents-container">
+                    <div class="loading">Cargando agentes...</div>
+                </div>
+            </section>
+
+            <!-- Recent Logs -->
+            <section class="card logs-section">
+                <h2>📝 Logs Recientes</h2>
+                <div class="logs-container" id="logs-container">
+                    <div class="loading">Cargando logs...</div>
+                </div>
+            </section>
+
+            <!-- Top Processes -->
+            <section class="card processes-section">
+                <h2>⚡ Procesos Activos</h2>
+                <div class="processes-table-container">
+                    <table class="processes-table" id="processes-table">
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>Nombre</th>
+                                <th>CPU %</th>
+                                <th>Memoria %</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="processes-tbody">
+                            <tr><td colspan="5">Cargando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Jazmín OS v1.0 🌸 | Dashboard Personal de Agentes</p>
+            <p class="timestamp" id="current-time">--</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

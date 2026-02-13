@@ -1,137 +1,115 @@
-# Jazmín OS 🌸
+# 🌸 Jazmín OS
 
-Dashboard personal de control para el ecosistema Clawdbot/Jazmín.
+Dashboard personal para monitorear agentes, métricas del sistema y logs en tiempo real.
 
-![Versión](https://img.shields.io/badge/version-1.0.0-pink)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
+![Jazmín OS](https://img.shields.io/badge/Jazmín%20OS-v1.0-6366f1?style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-009688?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.9+-3776ab?style=flat-square)
 
 ## ✨ Características
 
-- **🤖 Panel de Agentes**: Estado de agentes nocturnos con ejecución manual
-- **📊 Métricas del Sistema**: CPU, RAM, disco y uptime en tiempo real
-- **📁 Proyectos Activos**: Gestión de proyectos del ecosistema
-- **📝 Memory Feed**: Visualización cronológica de memoria
-- **⏰ Cron Jobs**: Administración de tareas programadas
-- **🛠️ Herramientas**: Acceso rápido a skills instaladas
-
-## 🎨 Diseño
-
-- **Tema**: Dark mode minimalista
-- **Acento**: Rosa Jazmín (#f0abfc)
-- **Layout**: Sidebar navigation + área principal
-- **Responsive**: Optimizado para mobile y desktop
+- 📊 **Métricas en tiempo real** - CPU, memoria, disco y uptime
+- 🤖 **Estado de agentes** - Monitorea tus agentes automáticos
+- 📝 **Logs centralizados** - Visualiza logs de todos los agentes
+- ⚡ **Procesos activos** - Top 20 procesos por uso de CPU
+- 🎨 **UI moderna** - Tema oscuro con diseño responsive
 
 ## 🚀 Instalación
 
-### 1. Navegar al proyecto
-
 ```bash
-cd ~/clawd/proyectos/jazmin-os
-```
+# Clonar el repositorio
+git clone https://github.com/AriGrela/jazmin-os.git
+cd jazmin-os
 
-### 2. Crear entorno virtual (opcional pero recomendado)
+# Crear entorno virtual
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# o: venv\Scripts\activate  # Windows
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Instalar dependencias
-
-```bash
+# Instalar dependencias
 pip install -r requirements.txt
-```
 
-### 4. Ejecutar la aplicación
-
-```bash
+# Iniciar el servidor
 python main.py
 ```
 
-La aplicación estará disponible en: **http://localhost:8000**
+## 🌐 Acceso
 
-## 📁 Estructura del Proyecto
+Una vez iniciado, abre tu navegador en:
+```
+http://localhost:8080
+```
+
+## 📡 API Endpoints
+
+| Endpoint | Descripción |
+|----------|-------------|
+| `GET /` | Dashboard web |
+| `GET /api/system` | Métricas del sistema |
+| `GET /api/agents` | Lista de agentes |
+| `POST /api/agents` | Crear agente |
+| `GET /api/logs` | Logs recientes |
+| `POST /api/logs` | Agregar log |
+| `GET /api/processes` | Procesos activos |
+| `GET /api/health` | Health check |
+
+## 🏗️ Arquitectura
 
 ```
 jazmin-os/
-├── main.py              # Aplicación FastAPI principal
-├── database.py          # Modelos y conexión SQLite
-├── requirements.txt     # Dependencias de Python
-├── README.md           # Este archivo
-├── static/
-│   ├── css/
-│   │   └── style.css   # Estilos con variables CSS
-│   ├── js/
-│   │   └── app.js      # Lógica frontend
-│   └── img/
-│       └── favicon.svg # Icono de flor/jazmín
-└── templates/
-    ├── base.html       # Template base con layout
-    ├── dashboard.html  # Vista principal
-    ├── agents.html     # Gestión de agentes
-    ├── projects.html   # Lista de proyectos
-    ├── memory.html     # Visualización de memoria
-    ├── metrics.html    # Métricas detalladas
-    └── tools.html      # Herramientas disponibles
+├── main.py              # FastAPI app
+├── requirements.txt     # Dependencias
+├── jazmin_os.db        # SQLite database
+├── templates/
+│   └── index.html      # Dashboard UI
+└── static/
+    ├── css/
+    │   └── style.css   # Estilos
+    └── js/
+        └── app.js      # Frontend logic
 ```
 
-## 🔌 API Endpoints
+## 🛠️ Stack Tecnológico
 
-### Dashboard
-- `GET /` - Dashboard principal
-- `GET /ws` - WebSocket para métricas en tiempo real
+- **Backend**: FastAPI + Uvicorn
+- **Base de datos**: SQLite
+- **Frontend**: HTML5 + CSS3 + Vanilla JS
+- **Monitoreo**: psutil (Python)
+- **UI**: Diseño dark theme con gradientes
 
-### API REST
-- `GET /api/metrics` - Métricas del sistema
-- `GET /api/agents` - Estado de agentes
-- `POST /api/agents/{agent_id}/run` - Ejecutar agente manualmente
-- `GET /api/projects` - Lista de proyectos
-- `GET /api/memory` - Entradas de memoria
-- `GET /api/cron` - Jobs de cron
-- `GET /api/tools` - Skills instaladas
+## 📝 Uso
 
-## 🖼️ Screenshots
-
-### Dashboard Principal
-Vista general con métricas en tiempo real, estado de agentes y proyectos recientes.
-
-### Panel de Agentes
-Control completo de agentes nocturnos con historial de ejecuciones.
-
-### Métricas del Sistema
-Gráficos de CPU, memoria y uso de disco con actualización en tiempo real.
-
-### Memory Feed
-Timeline cronológico de todas las entradas de memoria.
-
-## ⚙️ Configuración
-
-La base de datos SQLite se crea automáticamente en:
-```
-~/clawd/proyectos/jazmin-os/data/jazmin_os.db
-```
-
-### Variables de entorno (opcionales)
-
+### Agregar un agente
 ```bash
-export JAZMIN_OS_PORT=8000        # Puerto (default: 8000)
-export JAZMIN_OS_HOST=0.0.0.0     # Host (default: 0.0.0.0)
+curl -X POST http://localhost:8080/api/agents \
+  -H "Content-Type: application/json" \
+  -d '{"name": "mi-agente", "status": "active"}'
 ```
 
-## 🔄 Actualización de Datos
-
-- **Métricas**: WebSocket con actualización cada 5 segundos
-- **Agentes**: Polling cada 30 segundos
-- **Proyectos**: Escaneo en tiempo real
-- **Memory**: Actualización bajo demanda
-
-## 🛠️ Desarrollo
-
+### Agregar un log
 ```bash
-uvicorn main:app --reload --port 8000
+curl -X POST http://localhost:8080/api/logs \
+  -H "Content-Type: application/json" \
+  -d '{"agent_name": "mi-agente", "level": "info", "message": "Todo OK"}'
 ```
+
+## 🎯 Roadmap
+
+- [ ] Autenticación con JWT
+- [ ] WebSockets para updates en tiempo real
+- [ ] Gráficos históricos de métricas
+- [ ] Configuración de alertas
+- [ ] Integración con Telegram
+- [ ] Modo claro/oscuro
+
+## 👤 Autor
+
+**Ari Grela** - [@AriGrela](https://twitter.com/AriGrela)
+
+## 📄 Licencia
+
+MIT License - ver [LICENSE](LICENSE) para detalles.
 
 ---
 
-💜 Creado con amor por Jazmín para Ari
+<p align="center">🌸 Hecho con amor por Jazmín</p>
